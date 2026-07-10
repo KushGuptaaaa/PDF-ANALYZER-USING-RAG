@@ -1,16 +1,16 @@
 from dotenv import load_dotenv
-from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_mistralai import ChatMistralAI
 from langchain_core.prompts import ChatPromptTemplate
 
 load_dotenv()
 
-embedding_model = OpenAIEmbeddings()
+embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
 vectorstore = Chroma(
     persist_directory= "chroma_db",
-    embedding_function=embedding_model
+    embedding_function=embeddings
 )
 
 retriever = vectorstore.as_retriever(
